@@ -1,5 +1,5 @@
 # Multi-stage build to reduce image size
-FROM python:3.13-alpine3.22 AS builder
+FROM python:3.14-alpine3.22 AS builder
 
 # Set build argument for Ansible version
 ARG ANSIBLE_VERSION=latest
@@ -23,7 +23,7 @@ RUN if [ "$ANSIBLE_VERSION" = "latest" ]; then \
     fi
 
 # Runtime stage
-FROM python:3.13-alpine3.22
+FROM python:3.14-alpine3.22
 
 # Install minimal runtime dependencies
 RUN apk add --no-cache \
