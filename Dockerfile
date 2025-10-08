@@ -25,6 +25,9 @@ RUN if [ "$ANSIBLE_VERSION" = "latest" ]; then \
 # Runtime stage
 FROM python:3.14-alpine3.22
 
+# Upgrade system packages
+RUN apk upgrade --no-cache
+
 # Install minimal runtime dependencies
 RUN apk add --no-cache \
     bash \
