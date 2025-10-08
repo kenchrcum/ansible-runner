@@ -37,7 +37,7 @@ RUN apk add --no-cache \
     && rm -rf /var/cache/apk/*
 
 # Copy installed Python packages from builder
-COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
 COPY --from=builder /usr/local/bin/ansible* /usr/local/bin/
 
 # Create ansible user with uid 1000
