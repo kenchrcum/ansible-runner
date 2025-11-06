@@ -10,9 +10,30 @@ if [ "$1" = "--push" ]; then
 fi
 
 IMAGE_NAME="kenchrcum/ansible-runner"
+BASE_TAG="$IMAGE_NAME:base"
 #ANSIBLE_VERSIONS=("12")
 ANSIBLE_VERSIONS=("2.9" "2.10" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "latest")
 
+# Build base image first (only once)
+echo "Building base image: $BASE_TAG"
+docker build -f Dockerfile.base -t $BASE_TAG .
+
+if [ $? -ne 0 ]; then
+    echo "Failed to build base image"
+    exit 1
+fi
+
+echo "Successfully built base image: $BASE_TAG"
+if [ "$PUSH" = true ]; then
+    echo "Pushing $BASE_TAG"
+    docker push $BASE_TAG
+    if [ $? -ne 0 ]; then
+        echo "Failed to push $BASE_TAG"
+        exit 1
+    fi
+fi
+
+# Build version-specific images
 for version in "${ANSIBLE_VERSIONS[@]}"; do
     echo "Building image for Ansible version: $version"
 
