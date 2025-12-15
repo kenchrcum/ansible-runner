@@ -11,8 +11,7 @@ fi
 
 IMAGE_NAME="kenchrcum/ansible-runner"
 BASE_TAG="$IMAGE_NAME:base"
-#ANSIBLE_VERSIONS=("12")
-ANSIBLE_VERSIONS=("2.9" "2.10" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "latest")
+ANSIBLE_VERSIONS=("2.9" "2.10" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "latest")
 
 # Build base image first (only once)
 echo "Building base image: $BASE_TAG"
