@@ -22,6 +22,10 @@ This repository provides Docker images for running Ansible with additional Pytho
 - netaddr
 - kubernetes
 
+The image also patches `hetzner.hcloud.server_info` so nullable server
+references returned during Hetzner server lifecycle transitions do not crash
+the playbook with a `NoneType.name` error.
+
 ## Building Images
 
 ### Local Build
@@ -34,7 +38,13 @@ This repository provides Docker images for running Ansible with additional Pytho
 ./build.sh --push
 ```
 
-This will build images for all supported Ansible versions and tag them as `kenchrcum/ansible-runner:<version>`.
+This will build images for all supported Ansible versions and tag each image
+with both the existing `kenchrcum/ansible-runner:<version>` tag and the
+cache-safe `kenchrcum/ansible-runner:<version>-hcloud-fix` tag.
+
+After changing the runner image, rebuild and push it, then configure the
+operator to use the new `13-hcloud-fix` tag. The new tag prevents Kubernetes
+nodes from continuing to use a cached image built before the fix.
 
 ## Usage
 
